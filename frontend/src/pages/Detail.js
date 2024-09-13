@@ -3,6 +3,7 @@ import { Table, Container, Row, Col, Button, Modal } from "react-bootstrap";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import DetailNavbar from "../components/detailNavbar";
+import Loading from "../components/Loading";
 import "../css/pages/Detail.css";
 
 const Detail = () => {
@@ -48,7 +49,7 @@ const Detail = () => {
     );
   }
 
-  if (!data) return <div>Loading...</div>;
+  if (!data) return <Loading show={true} />;
 
   const {
     nama,

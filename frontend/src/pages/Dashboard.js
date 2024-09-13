@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import AdminNavbar from "../components/adminNavbar";
 import LogoutNavbar from "../components/logoutNavbar";
+import Loading from "../components/Loading";
 import "../css/pages/Dashboard.css";
 
 const Dashboard = () => {
@@ -14,51 +15,52 @@ const Dashboard = () => {
   const [userId, setUserId] = useState(null);
   const [searchQuery, setSearchQuery] = useState("");
 
-useEffect(() => {
-  const fetchUserData = async () => {
-    try {
-      const token = localStorage.getItem("token");
-      const response = await axios.get(
-        `${process.env.REACT_APP_API_URL}/api/user`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-      // console.log("Fetched User ID:", response.data.id);
-      setUserId(response.data.id);
-    } catch (error) {
-      setError(
-        error.response?.data?.error ||
-          "An error occurred while fetching user data"
-      );
-    }
-  };
+  useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        const token = localStorage.getItem("token");
+        const response = await axios.get(
+          `${process.env.REACT_APP_API_URL}/api/user`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+        setUserId(response.data.id);
+      } catch (error) {
+        setError(
+          error.response?.data?.error ||
+            "An error occurred while fetching user data"
+        );
+      }
+    };
 
-  const fetchData = async () => {
-    try {
-      const token = localStorage.getItem("token");
-      const response = await axios.get(
-        `${process.env.REACT_APP_API_URL}/api/data`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-      setData(response.data);
-      setFilteredData(response.data);
-    } catch (error) {
-      setError(error.response?.data?.error || "Silahkan Login Terlebih Dahulu");
-    } finally {
-      setLoading(false);
-    }
-  };
+    const fetchData = async () => {
+      try {
+        const token = localStorage.getItem("token");
+        const response = await axios.get(
+          `${process.env.REACT_APP_API_URL}/api/data`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+        setData(response.data);
+        setFilteredData(response.data);
+      } catch (error) {
+        setError(
+          error.response?.data?.error || "Silahkan Login Terlebih Dahulu"
+        );
+      } finally {
+        setLoading(false);
+      }
+    };
 
-  fetchUserData();
-  fetchData();
-}, []);
+    fetchUserData();
+    fetchData();
+  }, []);
 
   useEffect(() => {
     const results = data.filter(
@@ -74,7 +76,7 @@ useEffect(() => {
     setSearchQuery(e.target.value);
   };
 
-  if (loading) return <div>Loading...</div>;
+  if (loading) return <Loading show={true} />;
   if (error) return <div className="centered-error">{error}</div>;
 
   return (

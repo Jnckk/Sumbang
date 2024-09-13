@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Container, Table, Card, Form } from "react-bootstrap";
 import MainNavbar from "../components/mainNavbar";
 import axios from "axios";
+import Loading from "../components/Loading";
 import "../css/pages/Verifikasi.css";
 
 const Verifikasi = () => {
@@ -53,28 +54,24 @@ const Verifikasi = () => {
     setSearchQuery(e.target.value);
   };
 
-const getStatusClass = (status) => {
-  switch (status) {
-    case "Rejected":
-      return "status-rejected";
-    case "Approved":
-      return "status-approved";
-    case "On Hold":
-      return "status-on-hold";
-    case "On Process":
-      return "status-on-process";
-    case "Done":
-      return "status-done";
-    case "Verifikasi":
-      return "status-verifikasi";
-    default:
-      return "";
-  }
-};
-
-
-  if (loading) return <div>Loading...</div>;
-  if (error) return <div>{error}</div>;
+  const getStatusClass = (status) => {
+    switch (status) {
+      case "Rejected":
+        return "status-rejected";
+      case "Approved":
+        return "status-approved";
+      case "On Hold":
+        return "status-on-hold";
+      case "On Process":
+        return "status-on-process";
+      case "Done":
+        return "status-done";
+      case "Verifikasi":
+        return "status-verifikasi";
+      default:
+        return "";
+    }
+  };
 
   return (
     <>
@@ -94,6 +91,8 @@ const getStatusClass = (status) => {
             />
           </Form.Group>
         </div>
+        <Loading show={loading} />
+        {error && <div>{error}</div>}
         <div className="d-none d-md-block">
           <Table striped bordered hover>
             <thead>
