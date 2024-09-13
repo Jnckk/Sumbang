@@ -26,7 +26,7 @@ useEffect(() => {
           },
         }
       );
-      console.log("Fetched User ID:", response.data.id); // Add this line
+      // console.log("Fetched User ID:", response.data.id);
       setUserId(response.data.id);
     } catch (error) {
       setError(
