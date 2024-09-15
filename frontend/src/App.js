@@ -1,5 +1,6 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import { Analytics } from "@vercel/analytics/react";
 import LandingPage from "./pages/LandingPage";
 import Pelaporan from "./pages/Pelaporan";
 import Footer from "./components/footer";
@@ -29,6 +30,7 @@ function App() {
         </div>
         <Footer />
       </div>
+      <Analytics />
     </Router>
   );
 }
